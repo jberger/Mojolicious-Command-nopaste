@@ -4,10 +4,10 @@ use Mojo::Base 'Mojolicious::Command';
 use Mojo::UserAgent;
 use Getopt::Long qw(GetOptionsFromArray :config no_ignore_case); # no_auto_abbrev
 
-has files => sub { [] };
+has files    => sub { [] };
 has language => 'perl';
-has private => 0;
-has ua      => sub { Mojo::UserAgent->new->max_redirects(10) };
+has private  => 0;
+has ua       => sub { Mojo::UserAgent->new->max_redirects(10) };
 
 sub run {
   my ($self, @args) = @_;
