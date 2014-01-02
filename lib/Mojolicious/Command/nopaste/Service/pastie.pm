@@ -1,8 +1,5 @@
 package Mojolicious::Command::nopaste::Service::pastie;
-use Mojo::Base 'Mojolicious::Command';
-
-use Getopt::Long qw(GetOptionsFromArray :config no_auto_abbrev no_ignore_case);
-use Mojo::UserAgent;
+use Mojo::Base 'Mojolicious::Command::nopaste::Service';
 
 has description => 'Post to pastie.org';
 has usage       => "usage:";
@@ -60,19 +57,14 @@ my %languages = (
     "make" => "31",
 );
 
-sub run {
-  my ($self, @args) = @_;
-  GetOptionsFromArray \@args,
-    'l|lang=s'  => \(my $lang = 'plain text'),
-    'P|private' => \(my $priv = 0);
-  my $lang_id = $languages{lc($lang)} || $languages{'plain text'};
-  my $text = do { local $/; local @ARGV = @args; <> };
+sub paste {
+  my $self = shift;
+  my $lang_id = $languages{lc($self->language || '')} || $languages{'plain text'};
 
-  my $ua = Mojo::UserAgent->new->max_redirects(10);
-  my $tx = $ua->post( 'http://pastie.org/pastes', form => {
-    'paste[body]'          => $text,
+  my $tx = $self->ua->post( 'http://pastie.org/pastes', form => {
+    'paste[body]'          => $self->slurp,
     'paste[authorization]' => 'burger',  # set with JS to avoid bots
-    'paste[restricted]'    => $priv,
+    'paste[restricted]'    => $self->private,
     'paste[parser_id]'     => $lang_id,
   });
 
@@ -82,7 +74,7 @@ sub run {
     exit 1;
   }
 
-  say $tx->req->url;
+  return $tx->req->url;
 }
 
 1;
