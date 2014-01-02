@@ -2,10 +2,10 @@ package Mojolicious::Command::nopaste::Service;
 use Mojo::Base 'Mojolicious::Command';
 
 use Mojo::UserAgent;
-use Getopt::Long qw(GetOptionsFromArray :config no_auto_abbrev no_ignore_case);
+use Getopt::Long qw(GetOptionsFromArray :config no_ignore_case); # no_auto_abbrev
 
 has files => sub { [] };
-has 'language';
+has language => 'perl';
 has private => 0;
 has ua      => sub { Mojo::UserAgent->new->max_redirects(10) };
 
@@ -25,7 +25,8 @@ sub paste { die 'Not implemented' }
 sub slurp { 
   my ($self, @files) = @_;
   @files = @{ $self->files } unless @files;
-  local $/; local @ARGV = @files; 
+  local $/; 
+  local @ARGV = @files; 
   <>; 
 }
 
