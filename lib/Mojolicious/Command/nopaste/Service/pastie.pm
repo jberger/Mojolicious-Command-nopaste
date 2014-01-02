@@ -63,9 +63,9 @@ my %languages = (
 sub run {
   my ($self, @args) = @_;
   GetOptionsFromArray \@args,
-    'l|lang=s'  => \my $lang,
+    'l|lang=s'  => \(my $lang = 'plain text'),
     'P|private' => \(my $priv = 0);
-  my $lang_id = $languages{lc($lang)} || $languages{"plain text"};
+  my $lang_id = $languages{lc($lang)} || $languages{'plain text'};
   my $text = do { local $/; local @ARGV = @args; <> };
 
   my $ua = Mojo::UserAgent->new->max_redirects(10);
@@ -81,8 +81,9 @@ sub run {
     say $tx->res->body;
     exit 1;
   }
-  my $prefix = ''; 
-  my $title = $tx->res->dom('title')->text;
-  my ($id) = $title =~ /\#(\d+)/;
-  say "http://pastie.org/$prefix$id"
+
+  say $tx->req->url;
 }
+
+1;
+
