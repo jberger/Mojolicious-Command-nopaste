@@ -1,6 +1,9 @@
 package Mojolicious::Command::nopaste;
 use Mojo::Base 'Mojolicious::Commands';
 
+our $VERSION = '0.01';
+$VERSION = eval $VERSION;
+
 has description => "Paste to your favorite pastebin sites.\n";
 has hint        => <<EOF;
 
@@ -17,4 +20,8 @@ has usage => "usage: $0 nopaste SERVICE [OPTIONS]\n";
 sub help { shift->run(@_) }
 
 1;
+
+=head1 NAME
+
+Mojolicious::Command::nopaste - A minimal clone of App::Nopaste using Mojolicious
 

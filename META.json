@@ -1,0 +1,55 @@
+{
+   "abstract" : "A minimal clone of App::Nopaste using Mojolicious",
+   "author" : [
+      "Joel Berger <joel.a.berger@gmail.com>"
+   ],
+   "dynamic_config" : 1,
+   "generated_by" : "Module::Build version 0.4003, CPAN::Meta::Converter version 2.120921",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Mojolicious-Command-nopaste",
+   "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "Module::Build" : "0.38"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Mojolicious" : "4.0"
+         }
+      }
+   },
+   "provides" : {
+      "Mojolicious::Command::nopaste" : {
+         "file" : "lib/Mojolicious/Command/nopaste.pm",
+         "version" : "0.01"
+      },
+      "Mojolicious::Command::nopaste::Service" : {
+         "file" : "lib/Mojolicious/Command/nopaste/Service.pm",
+         "version" : 0
+      },
+      "Mojolicious::Command::nopaste::Service::pastie" : {
+         "file" : "lib/Mojolicious/Command/nopaste/Service/pastie.pm",
+         "version" : 0
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/jberger/Mojolicious-Command-nopaste/issues"
+      },
+      "license" : [
+         "http://dev.perl.org/licenses/"
+      ],
+      "repository" : {
+         "url" : "https://github.com/jberger/Mojolicious-Command-nopaste"
+      }
+   },
+   "version" : "0.01"
+}
