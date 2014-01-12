@@ -4,6 +4,8 @@ use Mojo::Base 'Mojolicious::Command::nopaste::Service';
 has description => "Post to paste.ubuntu.com\n";
 has usage       => "usage:";
 
+has name => 'anonymous';
+
 my %languages = (
   "text" => 1,
   "Cucumber" => 1,
@@ -211,7 +213,7 @@ sub paste {
 
   my $tx = $self->ua->post( 'http://paste.ubuntu.com', form => {
     content => $self->text,
-    ( $name ? ( poster => $name ) : () ),
+    poster  => $name,
     ( $lang ? ( syntax => $lang ) : () ),
   });
 
