@@ -1,4 +1,5 @@
 Build.PL
+Changes
 lib/Mojolicious/Command/nopaste.pm
 lib/Mojolicious/Command/nopaste/Service.pm
 lib/Mojolicious/Command/nopaste/Service/debian.pm
