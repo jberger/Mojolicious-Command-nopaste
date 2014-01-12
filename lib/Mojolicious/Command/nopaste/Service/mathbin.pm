@@ -1,7 +1,7 @@
 package Mojolicious::Command::nopaste::Service::mathbin;
 use Mojo::Base 'Mojolicious::Command::nopaste::Service';
 
-has description => 'Post to mathb.in';
+has description => "Post to mathb.in\n";
 has usage => 'usage:';
 
 sub paste {
