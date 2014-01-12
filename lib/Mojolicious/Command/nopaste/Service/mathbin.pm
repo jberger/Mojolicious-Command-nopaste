@@ -11,7 +11,7 @@ sub paste {
   my $title = $self->description;
 
   my $tx = $self->ua->post( 'http://mathb.in' => form => {
-    code    => $self->slurp,
+    code    => $self->text,
     ( $name  ? ( name  => $name  ) : () ),
     secrecy => $self->private ? 'yes' : '',
     ( $title ? ( title => $title ) : () ),

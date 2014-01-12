@@ -62,7 +62,7 @@ sub paste {
   my $lang_id = $languages{lc($self->language || '')} || $languages{'plain text'};
 
   my $tx = $self->ua->post( 'http://pastie.org/pastes', form => {
-    'paste[body]'          => $self->slurp,
+    'paste[body]'          => $self->text,
     'paste[authorization]' => 'burger',  # set with JS to avoid bots
     'paste[restricted]'    => $self->private,
     'paste[parser_id]'     => $lang_id,
