@@ -13,6 +13,7 @@ has clip => sub {
 has copy     => 0;
 has files    => sub { [] };
 has language => 'perl';
+has open     => 0;
 has private  => 0;
 has text     => sub { shift->slurp };
 has ua       => sub { Mojo::UserAgent->new->max_redirects(10) };
@@ -24,6 +25,7 @@ sub run {
     'description|d=s' => sub { $self->description($_[1])       },
     'name|n=s'        => sub { $self->name($_[1])              },
     'language|l=s'    => sub { $self->language($_[1])          },
+    'open|o'          => sub { $self->open($_[1])              },
     'paste|p'         => sub { $self->text($self->clip->paste) },
     'private|P'       => sub { $self->private($_[1])           },
   );
@@ -31,6 +33,11 @@ sub run {
   my $url = $self->paste or return;
   say $url;
   $self->clip->copy($url) if $self->copy;
+  if ($self->open) {
+    die "Browser::Open module not available. Do you need to install it?\n?"
+      unless eval { require Browser::Open; 1 };
+    Browser::Open::open_browser($url);
+  }
 }
 
 sub paste { die 'Not implemented' }
