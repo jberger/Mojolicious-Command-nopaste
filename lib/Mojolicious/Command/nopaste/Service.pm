@@ -28,10 +28,9 @@ has [qw/channel name desc/];
 has clip => sub { 
   die "Clipboard module not available. Do you need to install it?\n"
     unless eval 'use Clipboard; 1';
-  monkey_patch 'Clipboard::Xclip' => copy => sub {
-    my ($self, $input) = @_;
-    eval { $self->copy_to_selection($_, $input) } for $self->all_selections();
-  };
+  monkey_patch 'Clipboard::Xclip',
+    copy  => \&_xclip_copy,
+    paste => \&_xclip_paste;
   return 'Clipboard';
 };
 has copy     => 0;
@@ -47,16 +46,14 @@ has usage => $USAGE;
 sub run {
   my ($self, @args) = @_;
   GetOptionsFromArray( \@args,
-    'channel|c=s'     => sub { $self->channel($_[1])     },
-    'copy|x'          => sub { $self->copy($_[1])        },
-    'description|d=s' => sub { $self->desc($_[1]) },
-    'name|n=s'        => sub { $self->name($_[1])        },
-    'language|l=s'    => sub { $self->language($_[1])    },
-    'open|o'          => sub { $self->open($_[1])        },
-    'paste|p'         => sub { 
-      $self->text(decode 'UTF-8', $self->clip->paste) 
-    },
-    'private|P'       => sub { $self->private($_[1])     },
+    'channel|c=s'     => sub { $self->channel($_[1])           },
+    'copy|x'          => sub { $self->copy($_[1])              },
+    'description|d=s' => sub { $self->desc($_[1])              },
+    'name|n=s'        => sub { $self->name($_[1])              },
+    'language|l=s'    => sub { $self->language($_[1])          },
+    'open|o'          => sub { $self->open($_[1])              },
+    'paste|p'         => sub { $self->text($self->clip->paste) },
+    'private|P'       => sub { $self->private($_[1])           },
   );
   $self->files(\@args);
   my $url = $self->paste or return;
@@ -77,6 +74,21 @@ sub slurp {
   local $/; 
   local @ARGV = @files;
   return decode 'UTF-8', <>;
+}
+
+sub _xclip_copy {
+  my ($self, $input) = @_;
+  eval { $self->copy_to_selection($_, $input) } for $self->all_selections();
+}
+
+sub _xclip_paste {
+  my $self = shift;
+  my $data;
+  for my $sel ($self->all_selections) {
+    $data = eval { $self->paste_from_selection($sel) };
+    last if $data;
+  }
+  return decode 'UTF-8', $data || '';
 }
 
 1;
