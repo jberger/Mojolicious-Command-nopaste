@@ -19,7 +19,7 @@ sub paste {
     exit 1;
   }
 
-  my $url = $tx->res->url;
+  my $url = $tx->req->url;
   $url->query( hl => 'on' ) if $self->language eq 'perl';
   return $url;
 }
