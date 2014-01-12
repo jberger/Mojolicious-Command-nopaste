@@ -1,8 +1,0 @@
-A prototype of clone of App::Nopaste using Mojolicious
-
-Currently supports basic pasting to pastie.org
-
-TODO: lots, like abstracting some service functionality into a base class, as nopaste does
-
-License: same as Perl 5
-Copyright 2013 Joel Berger

@@ -1,5 +1,5 @@
 ---
-abstract: 'A minimal clone of App::Nopaste using Mojolicious'
+abstract: 'A clone of App::Nopaste using Mojolicious'
 author:
   - 'Joel Berger <joel.a.berger@gmail.com>'
 build_requires: {}

@@ -9,4 +9,4 @@ lib/Mojolicious/Command/nopaste/Service/ubuntu.pm
 MANIFEST			This list of files
 META.json
 META.yml
-README
+README.pod
