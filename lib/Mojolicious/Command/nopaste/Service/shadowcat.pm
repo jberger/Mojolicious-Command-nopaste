@@ -10,7 +10,7 @@ sub paste {
   $ua->max_redirects(0);
 
   my $tx = $ua->post( 'http://paste.scsys.co.uk/paste' => form => {
-    channel => $self->chan || '',
+    channel => $self->channel || '',
     nick    => $self->name || '',
     paste   => $self->text,
     summary => $self->description || '',
