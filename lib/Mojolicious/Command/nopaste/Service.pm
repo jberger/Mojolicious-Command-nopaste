@@ -24,7 +24,7 @@ OPTIONS:
 
 END
 
-has [qw/channel name description/];
+has [qw/channel name desc/];
 has clip => sub { 
   die "Clipboard module not available. Do you need to install it?\n"
     unless eval 'use Clipboard; 1';
@@ -49,7 +49,7 @@ sub run {
   GetOptionsFromArray( \@args,
     'channel|c=s'     => sub { $self->channel($_[1])     },
     'copy|x'          => sub { $self->copy($_[1])        },
-    'description|d=s' => sub { $self->description($_[1]) },
+    'description|d=s' => sub { $self->desc($_[1]) },
     'name|n=s'        => sub { $self->name($_[1])        },
     'language|l=s'    => sub { $self->language($_[1])    },
     'open|o'          => sub { $self->open($_[1])        },

@@ -12,7 +12,7 @@ sub paste {
     channel => $self->channel || '',
     nick    => $self->name || '',
     paste   => $self->text,
-    summary => $self->description || '',
+    summary => $self->desc || '',
   });
 
   unless ($tx->res->is_status_class(200)) {

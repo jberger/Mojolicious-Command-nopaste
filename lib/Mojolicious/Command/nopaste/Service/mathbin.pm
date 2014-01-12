@@ -7,7 +7,7 @@ sub paste {
   my $self = shift;
 
   my $name  = $self->name;
-  my $title = $self->description;
+  my $title = $self->desc;
 
   my $tx = $self->ua->post( 'http://mathb.in' => form => {
     code    => $self->text,
