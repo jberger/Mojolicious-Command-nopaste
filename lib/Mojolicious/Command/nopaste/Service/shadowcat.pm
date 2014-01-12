@@ -15,8 +15,6 @@ sub paste {
     summary => $self->description || '',
   });
 
-  say $tx->res->body;
-
   unless ($tx->res->is_status_class(200)) {
     say $tx->res->message;
     say $tx->res->body;
