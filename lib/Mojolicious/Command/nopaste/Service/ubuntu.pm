@@ -213,7 +213,7 @@ sub paste {
   my $tx = $self->ua->post( 'http://paste.ubuntu.com', form => {
     content => $self->text,
     poster  => $self->name,
-    ( $lang ? ( syntax => $lang ) : () ),
+    syntax  => $lang,
   });
 
   unless ($tx->res->is_status_class(200)) {
