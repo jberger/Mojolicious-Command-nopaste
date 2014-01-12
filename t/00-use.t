@@ -1,3 +1,4 @@
+use Mojo::Base -strict;
 use Test::More;
 
 sub test_require {
