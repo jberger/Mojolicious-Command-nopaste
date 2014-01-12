@@ -4,7 +4,7 @@
       "Joel Berger <joel.a.berger@gmail.com>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.4003, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "Module::Build version 0.4203",
    "license" : [
       "perl_5"
    ],
@@ -31,12 +31,16 @@
          "version" : "0.01"
       },
       "Mojolicious::Command::nopaste::Service" : {
-         "file" : "lib/Mojolicious/Command/nopaste/Service.pm",
-         "version" : 0
+         "file" : "lib/Mojolicious/Command/nopaste/Service.pm"
+      },
+      "Mojolicious::Command::nopaste::Service::mathbin" : {
+         "file" : "lib/Mojolicious/Command/nopaste/Service/mathbin.pm"
       },
       "Mojolicious::Command::nopaste::Service::pastie" : {
-         "file" : "lib/Mojolicious/Command/nopaste/Service/pastie.pm",
-         "version" : 0
+         "file" : "lib/Mojolicious/Command/nopaste/Service/pastie.pm"
+      },
+      "Mojolicious::Command::nopaste::Service::ubuntu" : {
+         "file" : "lib/Mojolicious/Command/nopaste/Service/ubuntu.pm"
       }
    },
    "release_status" : "stable",
