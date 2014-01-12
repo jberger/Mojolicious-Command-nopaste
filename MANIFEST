@@ -10,3 +10,4 @@ MANIFEST			This list of files
 META.json
 META.yml
 README.pod
+t/00-use.t
