@@ -7,7 +7,7 @@ has usage       => "usage:";
 sub paste {
   my $self = shift;
   my $tx = $self->ua->post( 'http://paste.scsys.co.uk/paste' => form => {
-    channel => $self->channel || '',
+    channel => $self->chan || '',
     nick    => $self->name || '',
     paste   => $self->text,
     summary => $self->description || '',
