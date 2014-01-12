@@ -1,8 +1,9 @@
 Build.PL
 lib/Mojolicious/Command/nopaste.pm
 lib/Mojolicious/Command/nopaste/Service.pm
+lib/Mojolicious/Command/nopaste/Service/mathbin.pm
 lib/Mojolicious/Command/nopaste/Service/pastie.pm
 MANIFEST			This list of files
-README
-META.yml
 META.json
+META.yml
+README
