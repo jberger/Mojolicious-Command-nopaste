@@ -209,11 +209,10 @@ my %languages = (
 sub paste {
   my $self = shift;
   my $lang = exists $languages{$self->language} ? $self->language : 'text';
-  my $name = $self->name;
 
   my $tx = $self->ua->post( 'http://paste.ubuntu.com', form => {
     content => $self->text,
-    poster  => $name,
+    poster  => $self->name,
     ( $lang ? ( syntax => $lang ) : () ),
   });
 
