@@ -18,6 +18,8 @@ provides:
     version: 0.01
   Mojolicious::Command::nopaste::Service:
     file: lib/Mojolicious/Command/nopaste/Service.pm
+  Mojolicious::Command::nopaste::Service::debian:
+    file: lib/Mojolicious/Command/nopaste/Service/debian.pm
   Mojolicious::Command::nopaste::Service::mathbin:
     file: lib/Mojolicious/Command/nopaste/Service/mathbin.pm
   Mojolicious::Command::nopaste::Service::pastie:
