@@ -2,13 +2,18 @@ package Mojolicious::Command::nopaste::Service;
 use Mojo::Base 'Mojolicious::Command';
 
 use Mojo::UserAgent;
+use Mojo::Util 'monkey_patch';
 use Getopt::Long qw(GetOptionsFromArray :config no_ignore_case); # no_auto_abbrev
 
 has [qw/chan name description/];
 has clip => sub { 
-  eval 'use Clipboard; 1'
-    ? 'Clipboard'
-    : die "Clipboard module not available. Do you need to install it?\n";
+  die "Clipboard module not available. Do you need to install it?\n"
+    unless eval 'use Clipboard; 1';
+  monkey_patch 'Clipboard::Xclip' => copy => sub {
+    my ($self, $input) = @_;
+    eval { $self->copy_to_selection($_, $input) } for $self->all_selections();
+  };
+  return 'Clipboard';
 };
 has copy     => 0;
 has files    => sub { [] };
@@ -50,6 +55,8 @@ sub slurp {
   local @ARGV = @files; 
   <>; 
 }
+
+
 
 1;
 
