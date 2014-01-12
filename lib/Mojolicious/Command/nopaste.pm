@@ -44,8 +44,7 @@ choosing the service differs due to the way the L<Mojolicious::Commands> system 
 
 Files may be passed as arguments, read from STDIN or even read from the clipboard with the
 L<Clipboard> module.
-For a list of available services run C<mojo help nopaste> and to see the possible 
-option arguments run C<mojo nopaste help [SERVICE]>.
+For a list of available services run C<mojo help nopaste> or C<mojo nopaste help [SERVICE]>.
 
 =head1 SEE ALSO
 
