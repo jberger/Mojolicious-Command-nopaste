@@ -24,6 +24,8 @@ provides:
     file: lib/Mojolicious/Command/nopaste/Service/mathbin.pm
   Mojolicious::Command::nopaste::Service::pastie:
     file: lib/Mojolicious/Command/nopaste/Service/pastie.pm
+  Mojolicious::Command::nopaste::Service::shadowcat:
+    file: lib/Mojolicious/Command/nopaste/Service/shadowcat.pm
   Mojolicious::Command::nopaste::Service::ubuntu:
     file: lib/Mojolicious/Command/nopaste/Service/ubuntu.pm
 requires:

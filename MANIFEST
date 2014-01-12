@@ -1,10 +1,10 @@
 Build.PL
-debian
 lib/Mojolicious/Command/nopaste.pm
 lib/Mojolicious/Command/nopaste/Service.pm
 lib/Mojolicious/Command/nopaste/Service/debian.pm
 lib/Mojolicious/Command/nopaste/Service/mathbin.pm
 lib/Mojolicious/Command/nopaste/Service/pastie.pm
+lib/Mojolicious/Command/nopaste/Service/shadowcat.pm
 lib/Mojolicious/Command/nopaste/Service/ubuntu.pm
 MANIFEST			This list of files
 META.json
