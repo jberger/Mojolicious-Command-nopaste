@@ -2,7 +2,7 @@ package Mojolicious::Command::nopaste::Service;
 use Mojo::Base 'Mojolicious::Command';
 
 use Mojo::UserAgent;
-use Mojo::Util 'monkey_patch';
+use Mojo::Util qw/decode monkey_patch/;
 use Getopt::Long qw(GetOptionsFromArray :config no_ignore_case); # no_auto_abbrev
 
 our $USAGE = <<END;
@@ -47,14 +47,16 @@ has usage => $USAGE;
 sub run {
   my ($self, @args) = @_;
   GetOptionsFromArray( \@args,
-    'channel|c=s'     => sub { $self->channel($_[1])           },
-    'copy|x'          => sub { $self->copy($_[1])              },
-    'description|d=s' => sub { $self->description($_[1])       },
-    'name|n=s'        => sub { $self->name($_[1])              },
-    'language|l=s'    => sub { $self->language($_[1])          },
-    'open|o'          => sub { $self->open($_[1])              },
-    'paste|p'         => sub { $self->text($self->clip->paste) },
-    'private|P'       => sub { $self->private($_[1])           },
+    'channel|c=s'     => sub { $self->channel($_[1])     },
+    'copy|x'          => sub { $self->copy($_[1])        },
+    'description|d=s' => sub { $self->description($_[1]) },
+    'name|n=s'        => sub { $self->name($_[1])        },
+    'language|l=s'    => sub { $self->language($_[1])    },
+    'open|o'          => sub { $self->open($_[1])        },
+    'paste|p'         => sub { 
+      $self->text(decode 'UTF-8', $self->clip->paste) 
+    },
+    'private|P'       => sub { $self->private($_[1])     },
   );
   $self->files(\@args);
   my $url = $self->paste or return;
@@ -73,11 +75,9 @@ sub slurp {
   my ($self, @files) = @_;
   @files = @{ $self->files } unless @files;
   local $/; 
-  local @ARGV = @files; 
-  <>; 
+  local @ARGV = @files;
+  return decode 'UTF-8', <>;
 }
-
-
 
 1;
 
