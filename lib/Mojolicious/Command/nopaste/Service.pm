@@ -4,6 +4,7 @@ use Mojo::Base 'Mojolicious::Command';
 use Mojo::UserAgent;
 use Getopt::Long qw(GetOptionsFromArray :config no_ignore_case); # no_auto_abbrev
 
+has [qw/name description/];
 has files    => sub { [] };
 has language => 'perl';
 has private  => 0;
@@ -12,8 +13,10 @@ has ua       => sub { Mojo::UserAgent->new->max_redirects(10) };
 sub run {
   my ($self, @args) = @_;
   GetOptionsFromArray( \@args,
-    'language|l=s' => sub { $self->language($_[1]) },
-    'private|P'    => sub { $self->private($_[1])  },
+    'description|d=s' => sub { $self->description($_[1]) },
+    'name|n=s'        => sub { $self->name($_[1])        },
+    'language|l=s'    => sub { $self->language($_[1])    },
+    'private|P'       => sub { $self->private($_[1])     },
   );
   $self->files(\@args);
   my $url = $self->paste or return;
