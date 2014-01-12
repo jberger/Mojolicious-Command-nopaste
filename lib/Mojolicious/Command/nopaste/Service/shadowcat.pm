@@ -6,12 +6,17 @@ has usage       => "usage:";
 
 sub paste {
   my $self = shift;
-  my $tx = $self->ua->post( 'http://paste.scsys.co.uk/paste' => form => {
+  my $ua = $self->ua;
+  $ua->max_redirects(0);
+
+  my $tx = $ua->post( 'http://paste.scsys.co.uk/paste' => form => {
     channel => $self->chan || '',
     nick    => $self->name || '',
     paste   => $self->text,
     summary => $self->description || '',
   });
+
+  say $tx->res->body;
 
   unless ($tx->res->is_status_class(200)) {
     say $tx->res->message;
@@ -19,8 +24,18 @@ sub paste {
     exit 1;
   }
 
-  my $url = $tx->req->url;
+  # <meta http-equiv="refresh" content="5;url=http://paste.scsys.co.uk/290870">
+
+  my $redir = $tx->res->dom->at('meta[http-equiv="refresh"]')->{content};
+  my $url   = $1 if $redir =~ /url=(.*)/;
+
+  die "Could not find redirect url\n" unless $url;
+
+  require Mojo::URL;
+  $url = Mojo::URL->new($url);
+
   $url->query( hl => 'on' ) if $self->language eq 'perl';
+  
   return $url;
 }
 
