@@ -2,7 +2,6 @@ package Mojolicious::Command::nopaste::Service::ubuntu;
 use Mojo::Base 'Mojolicious::Command::nopaste::Service';
 
 has description => "Post to paste.ubuntu.com\n";
-has usage       => "usage:";
 
 has name => 'anonymous';
 

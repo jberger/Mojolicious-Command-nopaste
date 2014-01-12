@@ -1,21 +1,25 @@
 package Mojolicious::Command::nopaste;
 use Mojo::Base 'Mojolicious::Commands';
+use Mojolicious::Command::nopaste::Service;
 
 our $VERSION = '0.01';
 $VERSION = eval $VERSION;
 
 has description => "Paste to your favorite pastebin sites.\n";
-has hint        => <<EOF;
 
-See '$0 nopaste help SERVICE' for more information on a specific service implementation.
-EOF
-has message => <<EOF;
-usage: $0 nopaste SERVICE [OPTIONS]
+has message => sub {
+  return shift->description . <<EOF;
 
 These services are currently available:
 EOF
+};
+
+has hint => "\n" . $Mojolicious::Command::nopaste::Service::USAGE . <<EOF;
+
+See '$0 nopaste help SERVICE' for more information on a specific service implementation.
+EOF
+
 has namespaces => sub { ['Mojolicious::Command::nopaste::Service'] };
-has usage => "usage: $0 nopaste SERVICE [OPTIONS]\n";
 
 sub help { shift->run(@_) }
 

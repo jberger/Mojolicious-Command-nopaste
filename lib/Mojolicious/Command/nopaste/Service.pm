@@ -5,6 +5,25 @@ use Mojo::UserAgent;
 use Mojo::Util 'monkey_patch';
 use Getopt::Long qw(GetOptionsFromArray :config no_ignore_case); # no_auto_abbrev
 
+our $USAGE = <<END;
+USAGE:
+
+  $0 command SERVICE [OPTIONS] [FILES]
+
+OPTIONS:
+  Note that not all options are relevant for all services.
+
+  --channel, -c       The channel for the pastebin's pastebot if relevent
+  --copy, -x          Copy the resulting URL to the clipboard (requires Clipboard.pm)
+  --description, -d   Description or title of the nopaste
+  --name, -n          Your name or nick
+  --language, -l      Language for syntax highlighting, defaults to 'perl'
+  --open, -o          Open a browser to the url (requires Browser::Open)
+  --paste, -p         Read contents from clipboard (requires Clipboard.pm)
+  --private, -P       Mark the paste as private (note: silently ignored if not relevant for service)
+
+END
+
 has [qw/channel name description/];
 has clip => sub { 
   die "Clipboard module not available. Do you need to install it?\n"
@@ -22,6 +41,8 @@ has open     => 0;
 has private  => 0;
 has text     => sub { shift->slurp };
 has ua       => sub { Mojo::UserAgent->new->max_redirects(10) };
+
+has usage => $USAGE;
 
 sub run {
   my ($self, @args) = @_;

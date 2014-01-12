@@ -2,7 +2,6 @@ package Mojolicious::Command::nopaste::Service::shadowcat;
 use Mojo::Base 'Mojolicious::Command::nopaste::Service';
 
 has description => "Post to paste.scsys.co.uk\n";
-has usage       => "usage:";
 
 sub paste {
   my $self = shift;

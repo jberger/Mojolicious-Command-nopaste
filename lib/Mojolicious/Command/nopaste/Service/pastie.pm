@@ -2,7 +2,6 @@ package Mojolicious::Command::nopaste::Service::pastie;
 use Mojo::Base 'Mojolicious::Command::nopaste::Service';
 
 has description => "Post to pastie.org\n";
-has usage       => "usage:";
 
 my %languages = (
     "bash" => "13",

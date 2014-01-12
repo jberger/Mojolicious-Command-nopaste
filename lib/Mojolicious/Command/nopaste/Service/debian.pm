@@ -2,7 +2,6 @@ package Mojolicious::Command::nopaste::Service::debian;
 use Mojo::Base 'Mojolicious::Command::nopaste::Service';
 
 has description => "Post to paste.debian.net\n";
-has usage       => "usage:";
 
 has name => 'anonymous';
 
