@@ -24,7 +24,10 @@ OPTIONS:
 
 END
 
+has usage => $USAGE;
+
 has [qw/channel name desc/];
+has [qw/copy open private/] => 0;
 has clip => sub { 
   die "Clipboard module not available. Do you need to install it?\n"
     unless eval 'use Clipboard; 1';
@@ -33,15 +36,10 @@ has clip => sub {
     paste => \&_xclip_paste;
   return 'Clipboard';
 };
-has copy     => 0;
 has files    => sub { [] };
 has language => 'perl';
-has open     => 0;
-has private  => 0;
 has text     => sub { shift->slurp };
 has ua       => sub { Mojo::UserAgent->new->max_redirects(10) };
-
-has usage => $USAGE;
 
 sub run {
   my ($self, @args) = @_;
