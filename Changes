@@ -1,5 +1,8 @@
 Revision history for Perl module Mojolicious::Command::nopaste
 
+0.06 2014-09-01
+  - Added IRC handling via Mojo::IRC except where already handled
+
 0.05 2014-09-01
   - Fix printed output for Gist support
 

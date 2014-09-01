@@ -13,10 +13,10 @@ USAGE:
 OPTIONS:
   Note that not all options are relevant for all services.
 
-  --channel, -c       The channel for the pastebin's pastebot if relevent
+  --channel, -c       The channel for the service's pastebot or to post via Mojo::IRC
   --copy, -x          Copy the resulting URL to the clipboard (requires Clipboard.pm)
   --description, -d   Description or title of the nopaste
-  --name, -n          Your name or nick
+  --name, -n          Your name or nick, used for the pastebin and/or IRC
   --language, -l      Language for syntax highlighting, defaults to 'perl'
   --open, -o          Open a browser to the url (requires Browser::Open)
   --paste, -p         Read contents from clipboard (requires Clipboard.pm)
