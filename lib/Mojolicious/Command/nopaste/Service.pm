@@ -14,6 +14,7 @@ OPTIONS:
   Note that not all options are relevant for all services.
 
   --channel, -c       The channel for the service's pastebot or to post via Mojo::IRC
+                          e.g. perl, #perl, irc://irc.perl.org:6667/perl
   --copy, -x          Copy the resulting URL to the clipboard (requires Clipboard.pm)
   --description, -d   Description or title of the nopaste
   --name, -n          Your name or nick, used for the pastebin and/or IRC
