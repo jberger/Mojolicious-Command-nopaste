@@ -123,7 +123,7 @@ sub send_via_irc {
       sub { $irc->disconnect( shift->begin ) },
       sub { Mojo::IOLoop->stop }, 
     );
-    $delay->catch($catch);
+    $delay->on(error => $catch);
   });
 
   $irc->connect(sub{
