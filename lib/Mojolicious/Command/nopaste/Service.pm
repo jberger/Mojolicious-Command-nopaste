@@ -67,7 +67,7 @@ sub run {
   say $url;
   $self->clip->copy($url) if $self->copy;
   if ($self->open) {
-    die "Browser::Open module not available. Do you need to install it?\n?"
+    die "Browser::Open module not available. Do you need to install it?\n"
       unless eval { require Browser::Open; 1 };
     Browser::Open::open_browser($url);
   }
@@ -97,8 +97,8 @@ sub slurp {
 
 sub send_via_irc {
   my ($self, $paste) = @_;
-  eval { require Mojo::IRC; 1 } 
-    or die "This service requires Mojo::IRC to post to IRC, but it is not available. Do you need to install it?\n";
+  die "This service requires Mojo::IRC to post to IRC, but it is not available. Do you need to install it?\n"
+    unless eval { require Mojo::IRC; 1 };
   require Mojo::IOLoop;
   require Mojo::URL;
 
