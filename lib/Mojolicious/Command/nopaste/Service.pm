@@ -35,7 +35,7 @@ has usage => sub {
 };
 
 has [qw/channel name desc service_usage token/];
-has [qw/copy open private/] => 0;
+has [qw/copy open private irc_handled/] => 0;
 has clip => sub { 
   die "Clipboard module not available. Do you need to install it?\n"
     unless eval 'use Clipboard; 1';
@@ -71,6 +71,9 @@ sub run {
       unless eval { require Browser::Open; 1 };
     Browser::Open::open_browser($url);
   }
+  if ($self->channel and not $self->irc_handled) {
+    $self->send_via_irc($url);
+  }
 }
 
 sub add_token {
@@ -90,6 +93,55 @@ sub slurp {
   local $/; 
   local @ARGV = @files;
   return decode 'UTF-8', <>;
+}
+
+sub send_via_irc {
+  my ($self, $paste) = @_;
+  eval { require Mojo::IRC; 1 } or die $@;
+  require Mojo::IOLoop;
+  require Mojo::URL;
+
+  my $url = Mojo::URL->new($self->channel);
+  my $chan = $url->fragment || $url->path->[-1];
+  die "Could not parse IRC channel\n" unless $chan;
+  my $server = $url->host_port || 'irc.perl.org:6667';
+  my $irc = Mojo::IRC->new(server => $server, nick => 'MojoNoPaste', user => 'MojoNoPaste');
+  $irc->register_default_event_handlers;
+
+  my $name = $self->name || 'someone';
+
+  my $err;
+  $irc->on(error     => sub { Mojo::IOLoop->stop; $err = $_[1] });
+  $irc->on(irc_error => sub { Mojo::IOLoop->stop; $err = $_[1] });
+
+  $irc->on(irc_join => sub {
+    my ($irc, $message) = @_;
+    my $chan = $message->{params}[0];
+    say "Joined $chan";
+    my $delay = Mojo::IOLoop->delay(
+      sub {
+        my $delay = shift;
+        $irc->write( privmsg => $chan, ":$name pasted $paste", $delay->begin);
+      },
+      sub {
+        my $delay = shift;
+        say 'Sent messsage';
+        $irc->disconnect( $delay->begin );
+      },
+      sub{ Mojo::IOLoop->stop }, 
+    );
+  });
+
+  $irc->connect(sub{
+    my ($irc, $err) = @_;
+    die $err if $err;
+    say 'Connected to IRC';
+    $irc->write(join => "#$chan");
+  });
+
+  Mojo::IOLoop->start;
+  
+  die $err if $err;
 }
 
 sub _xclip_copy {

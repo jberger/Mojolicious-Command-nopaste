@@ -3,6 +3,8 @@ use Mojo::Base 'Mojolicious::Command::nopaste::Service';
 
 has description => "Post to paste.scsys.co.uk\n";
 
+has irc_handled => 1;
+
 sub paste {
   my $self = shift;
   my $ua = $self->ua;
