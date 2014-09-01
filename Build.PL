@@ -14,6 +14,7 @@ my $build = Module::Build->new(
     'Mojolicious' => '4.0',
     'File::HomeDir' => 0,
   },
+  recommends => { 'Mojo::IRC' => 0 },
   meta_merge => {
     resources => {
       repository => 'https://github.com/jberger/Mojolicious-Command-nopaste',
