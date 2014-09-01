@@ -38,7 +38,7 @@ has [qw/channel name desc service_usage token/];
 has [qw/copy open private irc_handled/] => 0;
 has clip => sub { 
   die "Clipboard module not available. Do you need to install it?\n"
-    unless eval 'use Clipboard; 1';
+    unless eval { use Clipboard; 1 };
   monkey_patch 'Clipboard::Xclip',
     copy  => \&_xclip_copy,
     paste => \&_xclip_paste;
@@ -97,7 +97,8 @@ sub slurp {
 
 sub send_via_irc {
   my ($self, $paste) = @_;
-  eval { require Mojo::IRC; 1 } or die "This service requires Mojo::IRC to post to IRC\n";
+  eval { require Mojo::IRC; 1 } 
+    or die "This service requires Mojo::IRC to post to IRC, but it is not available. Do you need to install it?\n";
   require Mojo::IOLoop;
   require Mojo::URL;
 
