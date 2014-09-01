@@ -111,8 +111,8 @@ sub send_via_irc {
   my $name = $self->name || 'someone';
 
   my $err;
-  $irc->on(error     => sub { Mojo::IOLoop->stop; $err = $_[1] });
-  $irc->on(irc_error => sub { Mojo::IOLoop->stop; $err = $_[1] });
+  $irc->on(error     => sub { $err = $_[1]; Mojo::IOLoop->stop });
+  $irc->on(irc_error => sub { $err = $_[1]; Mojo::IOLoop->stop });
 
   $irc->on(irc_join => sub {
     my ($irc, $message) = @_;
