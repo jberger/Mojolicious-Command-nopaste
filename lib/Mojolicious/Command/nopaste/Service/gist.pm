@@ -56,15 +56,13 @@ sub paste {
     json => $data,
   );
 
-  say $tx->res->code;
-
   unless ($tx->res->is_status_class(200)) {
     say $tx->res->message;
     say $tx->res->body;
     exit 1;
   }
 
-  return $tx->res->json->{url};
+  return $tx->res->json->{html_url};
 }
 
 1;
