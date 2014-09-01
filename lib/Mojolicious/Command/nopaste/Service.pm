@@ -72,7 +72,7 @@ sub run {
     Browser::Open::open_browser($url);
   }
   if ($self->channel and not $self->irc_handled) {
-    $self->send_via_irc($url);
+    $self->post_to_irc($url);
   }
 }
 
@@ -95,7 +95,7 @@ sub slurp {
   return decode 'UTF-8', <>;
 }
 
-sub send_via_irc {
+sub post_to_irc {
   my ($self, $paste) = @_;
   die "This service requires Mojo::IRC to post to IRC, but it is not available. Do you need to install it?\n"
     unless eval { require Mojo::IRC; 1 };
