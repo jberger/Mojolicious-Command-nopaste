@@ -97,7 +97,7 @@ sub slurp {
 
 sub send_via_irc {
   my ($self, $paste) = @_;
-  eval { require Mojo::IRC; 1 } or die $@;
+  eval { require Mojo::IRC; 1 } or die "This service requires Mojo::IRC to post to IRC\n";
   require Mojo::IOLoop;
   require Mojo::URL;
 
