@@ -21,12 +21,20 @@ OPTIONS:
   --open, -o          Open a browser to the url (requires Browser::Open)
   --paste, -p         Read contents from clipboard (requires Clipboard.pm)
   --private, -P       Mark the paste as private (note: silently ignored if not relevant for service)
+  --token, -t         A file containing an access token, or else the token string itself
 
 END
 
-has usage => $USAGE;
+has usage => sub {
+  my $self = shift; 
+  my $usage = $USAGE;
+  if (my $add = $self->service_usage) {
+    $usage .= "\n$add";
+  }
+  return $usage;
+};
 
-has [qw/channel name desc/];
+has [qw/channel name desc service_usage token/];
 has [qw/copy open private/] => 0;
 has clip => sub { 
   die "Clipboard module not available. Do you need to install it?\n"
@@ -52,6 +60,7 @@ sub run {
     'open|o'          => sub { $self->open($_[1])              },
     'paste|p'         => sub { $self->text($self->clip->paste) },
     'private|P'       => sub { $self->private($_[1])           },
+    'token|t=s'       => sub { $self->add_token($_[1])         },
   );
   $self->files(\@args);
   my $url = $self->paste or return;
@@ -62,6 +71,15 @@ sub run {
       unless eval { require Browser::Open; 1 };
     Browser::Open::open_browser($url);
   }
+}
+
+sub add_token {
+  my ($self, $token) = @_;
+  if (-e $token) {
+    $token = $self->slurp($token);
+  }
+  chomp $token;
+  $self->token($token);
 }
 
 sub paste { die 'Not implemented' }

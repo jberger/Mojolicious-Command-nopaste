@@ -2,7 +2,7 @@ package Mojolicious::Command::nopaste;
 use Mojo::Base 'Mojolicious::Commands';
 use Mojolicious::Command::nopaste::Service;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 $VERSION = eval $VERSION;
 
 has description => "Paste to your favorite pastebin sites.\n";

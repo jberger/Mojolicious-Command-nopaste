@@ -1,5 +1,9 @@
 Revision history for Perl module Mojolicious::Command::nopaste
 
+0.04 2014-09-01
+  - Added GitHub Gist support
+    - Added dependency on File::HomeDir
+
 0.03 2014-01-12
   - Fix Clipboard.pm interaction
 
