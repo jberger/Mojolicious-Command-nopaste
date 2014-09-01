@@ -111,25 +111,19 @@ sub send_via_irc {
   my $name = $self->name || 'someone';
 
   my $err;
-  $irc->on(error     => sub { $err = $_[1]; Mojo::IOLoop->stop });
-  $irc->on(irc_error => sub { $err = $_[1]; Mojo::IOLoop->stop });
+  my $catch = sub { $err = $_[1]; Mojo::IOLoop->stop };
+  $irc->on(error     => $catch);
+  $irc->on(irc_error => $catch);
 
   $irc->on(irc_join => sub {
     my ($irc, $message) = @_;
     my $chan = $message->{params}[0];
-    say "Joined $chan";
     my $delay = Mojo::IOLoop->delay(
-      sub {
-        my $delay = shift;
-        $irc->write( privmsg => $chan, ":$name pasted $paste", $delay->begin);
-      },
-      sub {
-        my $delay = shift;
-        say 'Sent messsage';
-        $irc->disconnect( $delay->begin );
-      },
-      sub{ Mojo::IOLoop->stop }, 
+      sub { $irc->write( privmsg => $chan, ":$name pasted $paste", shift->begin ) },
+      sub { $irc->disconnect( shift->begin ) },
+      sub { Mojo::IOLoop->stop }, 
     );
+    $delay->catch($catch);
   });
 
   $irc->connect(sub{
