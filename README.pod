@@ -31,7 +31,7 @@ For a list of available services run C<mojo help nopaste> or C<mojo nopaste help
 
 =head1 SOURCE REPOSITORY
 
-L<http://github.com/jberger/Mojolicious::Command::nopaste> 
+L<http://github.com/jberger/Mojolicious-Command-nopaste> 
 
 =head1 AUTHOR
 
