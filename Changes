@@ -1,5 +1,8 @@
 Revision history for Perl module Mojolicious::Command::nopaste
 
+0.07 2014-12-18
+  - Added service sprunge.us
+
 0.06 2014-09-01
   - Added IRC handling via Mojo::IRC except where already handled
 
