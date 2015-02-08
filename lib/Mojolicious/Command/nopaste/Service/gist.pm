@@ -3,6 +3,7 @@ use Mojo::Base 'Mojolicious::Command::nopaste::Service';
 use Mojo::Path;
 use File::HomeDir;
 use File::Spec ();
+use Mojo::URL;
 
 has description => "Post to gist.github.com\n";
 has token => sub {
@@ -46,8 +47,17 @@ sub paste {
 
   $data->{description} = $self->desc if $self->desc;
 
-  my $tx = $self->ua->post( 
-    'https://api.github.com/gists',
+  my $url    = Mojo::URL->new('https://api.github.com/gists');
+  my $method = 'POST';
+
+  if (my $update = $self->update) {
+    push @{ $url->path->parts }, $update;
+    $method = 'PATCH';
+  }
+
+  my $ua = $self->ua;
+  my $tx = $ua->build_tx(
+    $method => $url,
     { 
       Accept => 'application/vnd.github.v3+json',
       Authorization => "token $token",
@@ -55,6 +65,7 @@ sub paste {
     },
     json => $data,
   );
+  $ua->start($tx);
 
   unless ($tx->res->is_status_class(200)) {
     say $tx->res->message;

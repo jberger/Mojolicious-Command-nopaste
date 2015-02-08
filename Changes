@@ -1,5 +1,8 @@
 Revision history for Perl module Mojolicious::Command::nopaste
 
+0.08 2015-02-07
+  - Added Gist updating
+
 0.07 2014-12-18
   - Added service sprunge.us
 

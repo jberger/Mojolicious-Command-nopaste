@@ -23,6 +23,7 @@ OPTIONS:
   --paste, -p         Read contents from clipboard (requires Clipboard.pm)
   --private, -P       Mark the paste as private (note: silently ignored if not relevant for service)
   --token, -t         A file containing an access token, or else the token string itself
+  --update, -u        Update a paste of a given id
 
 END
 
@@ -35,7 +36,7 @@ has usage => sub {
   return $usage;
 };
 
-has [qw/channel name desc service_usage token/];
+has [qw/channel name desc service_usage token update/];
 has [qw/copy open private irc_handled/] => 0;
 has clip => sub { 
   die "Clipboard module not available. Do you need to install it?\n"
@@ -62,6 +63,7 @@ sub run {
     'paste|p'         => sub { $self->text($self->clip->paste) },
     'private|P'       => sub { $self->private($_[1])           },
     'token|t=s'       => sub { $self->add_token($_[1])         },
+    'update|u=s'      => sub { $self->update($_[1])            },
   );
   $self->files(\@args);
   my $url = $self->paste or return;
