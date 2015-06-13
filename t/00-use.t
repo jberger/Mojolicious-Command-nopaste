@@ -10,7 +10,7 @@ sub test_require {
 test_require 'Mojolicious::Command::nopaste';
 test_require 'Mojolicious::Command::nopaste::Service';
 
-my @services = qw/debian gist mathbin pastie shadowcat sprunge ubuntu/;
+my @services = qw/debian fpaste gist mathbin pastie shadowcat sprunge ubuntu/;
 
 test_require "Mojolicious::Command::nopaste::Service::$_" foreach @services;
 
