@@ -93,9 +93,16 @@ sub paste { die 'Not implemented' }
 sub slurp { 
   my ($self, @files) = @_;
   @files = @{ $self->files } unless @files;
-  local $/; 
-  local @ARGV = @files;
-  return decode 'UTF-8', <>;
+
+  my $content = do {
+    local $/;
+    local @ARGV = @files;
+    decode 'UTF-8', <>;
+  };
+
+  # Remove trailing newline as some sites won't do it for us
+  chomp $content;
+  return $content;
 }
 
 sub post_to_irc {
