@@ -14,6 +14,9 @@ my $build = Module::Build->new(
     'Mojolicious' => '4.0',
     'File::HomeDir' => 0,
   },
+  recommends => {
+    'IO::Socket::SSL' => '1.94', # Mojolicious SSL support
+  },
   meta_merge => {
     resources => {
       repository => 'https://github.com/jberger/Mojolicious-Command-nopaste',

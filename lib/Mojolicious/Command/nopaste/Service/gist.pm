@@ -22,7 +22,7 @@ A token is required for posting to gist.
 
 See how to create one at:
   https://help.github.com/articles/creating-an-access-token-for-command-line-use
-To specify your token one the command line, set the --token (-t) command line 
+To specify your token one the command line, set the --token (-t) command line
 switch to a path to your token or the token value itself.
 Alternatively you can specify the token using the GIST_TOKEN env variable, or
 by creating a file called .gist_token in your home directory.
@@ -33,7 +33,7 @@ has service_usage => $token_usage;
 
 sub paste {
   my $self = shift;
-  my $token = $self->token or die $token_usage;  
+  my $token = $self->token or die $token_usage;
   my $data = {
     public => $self->private ? \0 : \1,
   };
@@ -58,7 +58,7 @@ sub paste {
   my $ua = $self->ua;
   my $tx = $ua->build_tx(
     $method => $url,
-    { 
+    {
       Accept => 'application/vnd.github.v3+json',
       Authorization => "token $token",
       'User-Agent' => 'Mojolicious-Command-nopaste (author: jberger)',
@@ -67,9 +67,13 @@ sub paste {
   );
   $ua->start($tx);
 
-  unless ($tx->res->is_status_class(200)) {
-    say $tx->res->message;
-    say $tx->res->body;
+  if (my $error = $tx->error) {
+    if ($error->{code}) {
+      say "Request failed, code $error->{code}: $error->{message}";
+      say $tx->res->body;
+    } else {
+      say "Connection error: $error->{message}";
+    }
     exit 1;
   }
 
