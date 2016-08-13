@@ -1,5 +1,9 @@
 Revision history for Perl module Mojolicious::Command::nopaste
 
+0.09 2016-08-13
+  - Handle connection errors better in gist support
+  - Added IO::Socket::SSL to recommends
+
 0.08 2015-02-07
   - Added Gist updating
 

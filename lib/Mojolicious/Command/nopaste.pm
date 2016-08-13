@@ -2,7 +2,7 @@ package Mojolicious::Command::nopaste;
 use Mojo::Base 'Mojolicious::Commands';
 use Mojolicious::Command::nopaste::Service;
 
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 $VERSION = eval $VERSION;
 
 has description => "Paste to your favorite pastebin sites.\n";
@@ -39,7 +39,7 @@ Mojolicious::Command::nopaste - A clone of App::Nopaste using Mojolicious
 
 This module is a clone of the venerable L<App::Nopaste> using the L<Mojolicious> toolkit.
 Nearly all of the functionality is mimicked.
-Where possible the command-line system has been replicated, though the mechanism of 
+Where possible the command-line system has been replicated, though the mechanism of
 choosing the service differs due to the way the L<Mojolicious::Commands> system works.
 
 Files may be passed as arguments, read from STDIN or even read from the clipboard with the
@@ -58,7 +58,7 @@ For a list of available services run C<mojo help nopaste> or C<mojo nopaste help
 
 =head1 SOURCE REPOSITORY
 
-L<http://github.com/jberger/Mojolicious-Command-nopaste> 
+L<http://github.com/jberger/Mojolicious-Command-nopaste>
 
 =head1 AUTHOR
 
