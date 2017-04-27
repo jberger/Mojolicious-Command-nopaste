@@ -11,7 +11,7 @@ my $build = Module::Build->new(
   license            => 'perl',
   configure_requires => { 'Module::Build' => 0.38 },
   requires => {
-    'Mojolicious' => '4.0',
+    'Mojolicious' => '7.13', # is_success
     'File::HomeDir' => 0,
   },
   recommends => {

@@ -19,7 +19,7 @@ sub paste {
     }
   );
 
-  unless ($tx->res->is_status_class(200)) {
+  unless ($tx->res->is_success) {
     say $tx->res->message;
     say $tx->res->body;
     exit 1;
