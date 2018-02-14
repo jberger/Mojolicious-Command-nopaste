@@ -134,7 +134,7 @@ sub post_to_irc {
       sub { $irc->disconnect( shift->begin ) },
       sub { Mojo::IOLoop->stop },
     );
-    $delay->on(error => $catch);
+    $delay->catch($catch);
   });
 
   $irc->connect(sub{
